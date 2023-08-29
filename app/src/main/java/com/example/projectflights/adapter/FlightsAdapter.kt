@@ -19,8 +19,8 @@ class FlightsAdapter(val flights: List<Itinerary>, private val onItemClick: (Iti
 
         with(holder.binding){
 
-            tvOriginFlightResponse.text = flight.legs[0].origin.name
-            tvDestinationFlightResponse.text = flight.legs[0].destination.name
+            tvOriginFlightResponse.text = flight.legs?.get(0)?.origin?.name
+            tvDestinationFlightResponse.text = flight.legs?.get(0)?.destination?.name
             tvPriceResponse.text= flight.price.formatted
 
             root.setOnClickListener {

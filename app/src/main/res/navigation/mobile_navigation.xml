@@ -29,5 +29,9 @@
     <fragment
         android:id="@+id/flightDetailsFragment"
         android:name="com.example.lec17.ui.movie_details.FlightDetailsFragment"
-        android:label="FlightDetailsFragment" />
+        android:label="FlightDetailsFragment" >
+        <action
+            android:id="@+id/action_flightDetailsFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
 </navigation>

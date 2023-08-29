@@ -21,6 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
+            app:searchIcon="@drawable/baseline_flight_takeoff_24"
             android:background="#EDE8E8"
             android:iconifiedByDefault="false" />
 
@@ -46,6 +47,7 @@
             android:id="@+id/search_airport_destination"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:searchIcon="@drawable/baseline_flight_land_24"
             android:layout_margin="8dp"
             app:iconifiedByDefault="false"
             android:hint="@string/destination_search_hint"
@@ -61,10 +63,10 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_flights"
-        android:layout_width="418dp"
-        android:layout_height="476dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -86,12 +88,16 @@
         app:layout_constraintTop_toBottomOf="@+id/destLl" />
 
     <EditText
+        android:cursorVisible="false"
         android:id="@+id/et_choose_date"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:hint="yyyy-mm-dd"
+        android:focusable="false"
+        android:editable="false"
+        android:clickable="true"
+        android:hint="@string/date_format"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -128,6 +134,29 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/originLl" />
+
+    <ImageView
+        android:id="@+id/iv_no_Flights"
+        android:layout_width="240dp"
+        android:layout_height="203dp"
+        android:src="@drawable/no_flights_found"
+        android:visibility="visible"
+
+        app:layout_constraintEnd_toEndOf="@id/rv_flights"
+        app:layout_constraintStart_toStartOf="@id/rv_flights"
+        app:layout_constraintTop_toTopOf="@+id/rv_flights" />
+
+    <TextView
+        android:id="@+id/tv_no_flights"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:text="Sorry.. No Flights Where Found!"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="#EA0606"
+        app:layout_constraintEnd_toEndOf="@+id/iv_no_Flights"
+        app:layout_constraintStart_toStartOf="@+id/iv_no_Flights"
+        app:layout_constraintTop_toBottomOf="@+id/iv_no_Flights" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

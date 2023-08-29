@@ -3,6 +3,7 @@ package com.example.projectflights.data.service.dto.flights
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import java.io.Serializable
 
 @Parcelize
 data class ParentX(
@@ -10,4 +11,4 @@ data class ParentX(
     val flightPlaceId: String,
     val name: String,
     val type: String
-):Parcelable
+):Parcelable, Serializable

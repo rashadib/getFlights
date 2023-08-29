@@ -5,4 +5,5 @@
     <string name="title_notifications">Notifications</string>
     <string name="origin_search_hint">Origin City/ Airport</string>
     <string name="destination_search_hint">Destination City/ Airport</string>
+    <string name="date_format">yyyy-mm-dd</string>
 </resources>

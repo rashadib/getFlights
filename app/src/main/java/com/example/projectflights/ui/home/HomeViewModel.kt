@@ -11,6 +11,7 @@ import com.example.projectflights.data.service.dto.airports.Data
 import com.example.projectflights.data.service.dto.flights.Itinerary
 import kotlinx.coroutines.launch
 import java.io.IOException
+import java.time.LocalDate
 import java.util.Date
 
 import com.example.projectflights.data.service.dto.airports.Data as AirportData
@@ -39,6 +40,13 @@ class HomeViewModel : ViewModel() {
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean> = _loading
 
+    private val _selectedDate = MutableLiveData<LocalDate>()
+    val selectedDate: LiveData<LocalDate> = _selectedDate
+
+    private val _noFlights = MutableLiveData(false)
+    val noFlights: LiveData<Boolean> = _noFlights
+
+
 
     fun searchAirport(query: String?, airportDest: Boolean) {
 
@@ -54,7 +62,6 @@ class HomeViewModel : ViewModel() {
                     _loading.value = true
                     val airportResponse =
                         AirportService.create().searchAirport(it)
-
                     if (!airportDest)
                         _originAirport.value = airportResponse.data
                     else
@@ -87,6 +94,7 @@ class HomeViewModel : ViewModel() {
         date: String
     ) {
         try {
+            _noFlights.value = false
             _loading.value = true
             val flightResponse =
                 FlightsService.create()
@@ -99,15 +107,19 @@ class HomeViewModel : ViewModel() {
                     )
 
             _flights.value = flightResponse.data.itineraries
-            Log.d(
-                "RASHAD",
-                "retreveFlights: ${flightResponse.data.itineraries[0].legs[0].arrival + " " + flightResponse.data.itineraries[0].legs[0].destination.city}"
-            )
+//            Log.d(
+//                "RASHAD",
+//                "retreveFlights: ${flightResponse.data.itineraries[0].legs[0].arrival + " " + flightResponse.data.itineraries[0].legs[0].destination.city}"
+//            )
         } catch (e: IOException) {
+            Log.d("RASHAD", "retrieveFlights: error1")
             _error.value = e.message ?: "Please check your internet and try again"
         } catch (e: java.lang.Exception) {
+            Log.d("RASHAD", "retrieveFlights: error2")
+            _noFlights.value = true
             _error.value = e.message ?: "Unknown Error"
         } finally {
+            Log.d("RASHAD", "retrieveFlights: error3")
             _loading.value = false
         }
 
@@ -123,7 +135,7 @@ class HomeViewModel : ViewModel() {
                 this@HomeViewModel.selectedOirignData?.entityId!!,
                 this@HomeViewModel.selectedDestinationData?.skyId!!,
                 this@HomeViewModel.selectedDestinationData?.entityId!!,
-                date.value!!.toString()
+                selectedDate.value!!.toString()
             )
         } catch (e: Exception) {
             Log.e("RASHAD", "${e.message}")
@@ -132,7 +144,7 @@ class HomeViewModel : ViewModel() {
 
     }
 
-    fun updateDate(newDate: String) {
-        _date.value = newDate
+    fun updateSelectedDate(newDate: LocalDate) {
+        _selectedDate.value = newDate
     }
 }
