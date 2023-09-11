@@ -8,18 +8,12 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.projectflights.ui.home.HomeFragment"
-        android:label="@string/title_home"
+        android:label="@string/title_search_flights"
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_navigation_home_to_flightDetailsFragment"
-            app:destination="@id/flightDetailsFragment" />
+            app:destination="@id/navigation_flightDetailsFragment" />
     </fragment>
-
-    <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.projectflights.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/navigation_notifications"
@@ -27,11 +21,11 @@
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
     <fragment
-        android:id="@+id/flightDetailsFragment"
-        android:name="com.example.lec17.ui.movie_details.FlightDetailsFragment"
-        android:label="FlightDetailsFragment" >
+        android:id="@+id/navigation_flightDetailsFragment"
+        android:name="com.example.projectflights.ui.flight_details.FlightDetailsFragment"
+        android:label="Flight Details" >
         <action
-            android:id="@+id/action_flightDetailsFragment_to_navigation_home"
+            android:id="@+id/action_navigation_flightDetailsFragment_to_navigation_home2"
             app:destination="@id/navigation_home" />
     </fragment>
 </navigation>

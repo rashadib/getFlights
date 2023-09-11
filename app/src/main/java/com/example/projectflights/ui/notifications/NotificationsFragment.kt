@@ -8,6 +8,8 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.projectflights.databinding.FragmentNotificationsBinding
+import dagger.hilt.android.AndroidEntryPoint
+
 
 class NotificationsFragment : Fragment() {
 

@@ -197,10 +197,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:text="Arrival:"
         app:layout_constraintStart_toStartOf="@+id/tv_departure_date"
-        app:layout_constraintTop_toBottomOf="@+id/tv_departure_date" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_stops" />
 
     <TextView
         android:id="@+id/tv_arrival_date"
@@ -247,9 +247,19 @@
         android:id="@+id/tv_arrival_airport_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ben-Gurion Airport"
+        android:text="@string/ben_gurion_airport"
         app:layout_constraintBottom_toBottomOf="@+id/tv_arrival_date"
         app:layout_constraintStart_toStartOf="@+id/tv_departure_airport_name"
         app:layout_constraintTop_toTopOf="@+id/tv_arrival_date" />
+
+    <TextView
+        android:id="@+id/tv_stops"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/_1_stop"
+        android:textColor="#F13325"
+        app:layout_constraintStart_toStartOf="@+id/tv_departure_date"
+        app:layout_constraintTop_toBottomOf="@+id/tv_departure_airport_name" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

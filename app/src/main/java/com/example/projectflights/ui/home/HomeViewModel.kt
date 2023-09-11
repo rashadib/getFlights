@@ -1,6 +1,8 @@
 package com.example.projectflights.ui.home
 
+import android.app.Application
 import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,7 +18,7 @@ import java.util.Date
 
 import com.example.projectflights.data.service.dto.airports.Data as AirportData
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel() : ViewModel() {
 
     var selectedOirignData: AirportData? = null
     var selectedDestinationData: AirportData? = null
@@ -45,6 +47,9 @@ class HomeViewModel : ViewModel() {
 
     private val _noFlights = MutableLiveData(false)
     val noFlights: LiveData<Boolean> = _noFlights
+
+    // LiveData to hold the list of saved ItineraryEntity objects from the Room Database
+
 
 
 
@@ -107,10 +112,11 @@ class HomeViewModel : ViewModel() {
                     )
 
             _flights.value = flightResponse.data.itineraries
-//            Log.d(
-//                "RASHAD",
-//                "retreveFlights: ${flightResponse.data.itineraries[0].legs[0].arrival + " " + flightResponse.data.itineraries[0].legs[0].destination.city}"
-//            )
+
+            // Save fetched itineraries to the Room Database
+         //    itineraryRepository.saveItineraries(flightResponse.data.itineraries)
+
+
         } catch (e: IOException) {
             Log.d("RASHAD", "retrieveFlights: error1")
             _error.value = e.message ?: "Please check your internet and try again"

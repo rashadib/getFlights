@@ -38,15 +38,24 @@ import java.util.Calendar
 import com.example.projectflights.data.service.dto.airports.Data as AirportData
 
 
+// The HomeFragment class represents the main UI screen for flight-search and presenting of the flights found(if any).
 class HomeFragment : Fragment() {
 
 
+    private var originDisplayText: String = ""
+    private var destDisplayText: String = ""
     private var _binding: FragmentHomeBinding? = null
-
     private val binding get() = _binding!!
 
+    // Lists to store filtered airport data for origin and destination.
     private var filteredOriginList = arrayListOf<AirportData>()
     private var filteredDestinationList = arrayListOf<AirportData>()
+    lateinit var homeViewModel: HomeViewModel
+
+    // Create a handler to manage search delay.
+    val searchHandler = Handler(Looper.getMainLooper())
+    val searchDelay: Long = 1000 // 1 second
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -54,7 +63,7 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
+        homeViewModel =
             ViewModelProvider(this).get(HomeViewModel::class.java)
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
@@ -62,14 +71,14 @@ class HomeFragment : Fragment() {
         binding.searchAirportOrigin.setIconifiedByDefault(false)
         binding.searchAirportDestination.setIconifiedByDefault(false)
 
+        // Set up search functionality for origin and destination airports.
 
+        // Initialize lists to hold suggestions for origin and destination airports.
         val originAirportsList = ArrayList<Any?>()
         val destinationAirportsList = ArrayList<Any?>()
 
-        val searchHandler = Handler(Looper.getMainLooper())
-        val searchDelay: Long = 1000 // 1 second
 
-
+        // Create adapters for the suggestion lists.
         var originAdapter = ArrayAdapter<Any?>(
             requireActivity(),
             android.R.layout.simple_list_item_1,
@@ -80,17 +89,20 @@ class HomeFragment : Fragment() {
             android.R.layout.simple_list_item_1,
             destinationAirportsList
         )
+
+        // Handle item click in the originAirports suggestion list.
         binding.originListView.setOnItemClickListener(object : OnItemClickListener {
             override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                Log.d("TAG", "onItemClick: ")
-                //handle eshi
+
                 homeViewModel.selectedOirignData = filteredOriginList[p2]
                 val selectedItem = homeViewModel.selectedOirignData
+                originDisplayText =
+                    "${selectedItem?.skyId}, ${selectedItem?.presentation?.title} (${selectedItem?.presentation?.subtitle})"
                 binding.searchAirportOrigin.setQuery(
-                    "${selectedItem?.skyId}, ${selectedItem?.presentation?.title} (${selectedItem?.presentation?.subtitle})",
+                    originDisplayText,
                     false
                 )
-
+                // Clear and hide the suggestion list.
                 filteredOriginList.clear()
                 resetResultListView(SearchType.ORIGIN)
                 binding.originListView.visibility = View.GONE
@@ -98,43 +110,30 @@ class HomeFragment : Fragment() {
 
         })
 
+        // Handle item click in the destinationAirports suggestion list.
         binding.destListView.setOnItemClickListener(object : OnItemClickListener {
             override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                Log.d("TAG", "onItemClick: ")
-                //handle eshi
+
                 homeViewModel.selectedDestinationData = filteredDestinationList[p2]
                 var selectedItem = homeViewModel.selectedDestinationData
+                destDisplayText =
+                    "${selectedItem?.skyId}, ${selectedItem?.presentation?.title} (${selectedItem?.presentation?.subtitle})"
                 binding.searchAirportDestination.setQuery(
-                    "${selectedItem?.skyId}, ${selectedItem?.presentation?.title} (${selectedItem?.presentation?.subtitle})",
+                    destDisplayText,
                     false
                 )
 
+                // Clear and hide the suggestion list.
                 filteredDestinationList.clear()
                 resetResultListView(SearchType.DEST)
                 binding.destListView.visibility = View.GONE
-                Log.d("TAG", "onItemClick: here")
 
             }
 
         })
 
 
-        binding.searchAirportOrigin.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                // homeViewModel.searchAirport(query,false)
-                return true
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                homeViewModel.searchAirport(newText, false)
-                binding.originListView.visibility = View.VISIBLE
-
-                return true
-            }
-
-        })
-
-
+        // Observe changes in origin airport data and update the suggestion list.
         homeViewModel.originAirport.observe(viewLifecycleOwner) {
             Log.d("TAG", "onCreateView: ")
             var listData = arrayListOf<String>()
@@ -143,6 +142,7 @@ class HomeFragment : Fragment() {
                 listData.add("${it.skyId}, ${it.presentation.title} (${it.presentation.subtitle})")
                 filteredOriginList.add(it)
             }
+            // Update the adapter and show the suggestion list.
             originAdapter = ArrayAdapter<Any?>(
                 requireActivity(),
                 android.R.layout.simple_list_item_1,
@@ -152,6 +152,8 @@ class HomeFragment : Fragment() {
             binding.originListView.visibility = View.VISIBLE
 
         }
+
+        // Observe changes in destination airport data and update the suggestion list.
         homeViewModel.destinationAirport.observe(viewLifecycleOwner) {
             Log.d("TAG", "onCreateView: ")
             var listData = arrayListOf<String>()
@@ -160,6 +162,7 @@ class HomeFragment : Fragment() {
                 listData.add("${it.skyId}, ${it.presentation.title} (${it.presentation.subtitle})")
                 filteredDestinationList.add(it)
             }
+            // Update the adapter and show the suggestion list.
             destinationAdapter = ArrayAdapter<Any?>(
                 requireActivity(),
                 android.R.layout.simple_list_item_1,
@@ -170,51 +173,41 @@ class HomeFragment : Fragment() {
 
         }
 
+        // Initialize suggestion lists as initially hidden.
         binding.originListView.visibility = View.GONE
         binding.originListView.adapter = originAdapter
 
         binding.destListView.visibility = View.GONE
         binding.destListView.adapter = destinationAdapter
 
-        binding.searchAirportDestination.setOnQueryTextListener(object :
-            SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                //homeViewModel.searchAirport(query, true)
-                return true
-            }
 
-            override fun onQueryTextChange(newText: String?): Boolean {
-                searchHandler.removeCallbacksAndMessages(null)
-                // Schedule a new search operation with a delay
-                searchHandler.postDelayed({
-                    homeViewModel.searchAirport(newText, true)
-                }, searchDelay)
-                return true
-            }
-
-        })
-
+        // Handle date selection when the "Choose Date" button is clicked.
         binding.etChooseDate.setOnClickListener {
             showDatePickerDialog(homeViewModel)
         }
-//
+
+        // Observe changes in the selected date and update the displayed date.
         homeViewModel.selectedDate.observe(viewLifecycleOwner) { selectedDate ->
             val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
             val formattedDate = selectedDate.format(dateFormatter)
             binding.etChooseDate.setText(formattedDate)
         }
 
+        // Handle the "Find Flights" button click.
         binding.btnFindFlights.setOnClickListener {
 
+            // Hide the keyboard when the button is clicked.
             val imm =
                 requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             imm?.hideSoftInputFromWindow(it.windowToken, 0)
 
+            // Start a coroutine to perform flight searches.
             viewLifecycleOwner.lifecycleScope.launch {
                 homeViewModel.findFlights()
             }
         }
 
+        // Observe changes in flight data and update the RecyclerView.
         homeViewModel.flights.observe(viewLifecycleOwner) {
             with(binding.rvFlights) {
                 layoutManager = LinearLayoutManager(context)
@@ -224,20 +217,34 @@ class HomeFragment : Fragment() {
             }
         }
 
-
+        // Observe loading state and show/hide the loading indicator.
         homeViewModel.loading.observe(viewLifecycleOwner) {
-
             binding.progressLoading.visibility = if (it) View.VISIBLE else View.GONE
         }
 
-        homeViewModel.noFlights.observe(viewLifecycleOwner){
-            binding.ivNoFlights.visibility = if(it) View.VISIBLE else View.GONE
-            binding.tvNoFlights.visibility = if(it) View.VISIBLE else View.GONE
+        // Observe the absence of flights and show/hide the corresponding UI elements.
+        homeViewModel.noFlights.observe(viewLifecycleOwner) {
+            binding.ivNoFlights.visibility = if (it) View.VISIBLE else View.GONE
+            binding.tvNoFlights.visibility = if (it) View.VISIBLE else View.GONE
         }
 
         return root
     }
 
+
+    override fun onResume() {
+        super.onResume()
+        //TODO Move destDisplayText and originDisplayText to viewModel
+        binding.searchAirportDestination.setQuery(destDisplayText, false)
+        binding.searchAirportOrigin.setQuery(originDisplayText, false)
+
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+    }
+
+    // Function that show a date picker dialog for selecting travel dates.
     @RequiresApi(Build.VERSION_CODES.O)
     private fun showDatePickerDialog(viewModel: HomeViewModel) {
         val initialYear = Calendar.getInstance().get(Calendar.YEAR)
@@ -254,12 +261,13 @@ class HomeFragment : Fragment() {
             initialMonth,
             initialDay
         )
-        // Set the minimum date to today's date
+        // Set the minimum date to today's date (restricting past dates).
         datePicker.datePicker.minDate = System.currentTimeMillis() - 1000
 
         datePicker.show()
     }
 
+    // Function that reset the suggestion lists based on search type (origin or destination).
     private fun resetResultListView(type: SearchType) {
         val originAdapter = ArrayAdapter<Any?>(
             requireActivity(),
@@ -273,26 +281,60 @@ class HomeFragment : Fragment() {
         }
     }
 
+    // Enum to distinguish between origin and destination searches.
     enum class SearchType {
         ORIGIN,
         DEST
     }
 
+    // Function that handles item click in the flight list to navigate to flight details.
     private fun onListItemClick(flight: Itinerary) {
 
+        // Navigate to the FlightDetailsFragment and pass the "flight" as bundle.
         val bundle = Bundle()
         bundle.putParcelable("flight", flight)
-        findNavController().navigate(R.id.action_navigation_home_to_flightDetailsFragment,bundle)
+        findNavController().navigate(R.id.action_navigation_home_to_flightDetailsFragment, bundle)
 
     }
 
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.searchAirportOrigin.queryHint = resources.getString(R.string.origin_search_hint)
-        binding.searchAirportDestination.queryHint =
-            resources.getString(R.string.destination_search_hint)
+
+        // Handle text changes in the destination search view with a delay.
+        binding.searchAirportDestination.setOnQueryTextListener(object :
+            SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                // Remove any previous search tasks and schedule a new one with a delay.
+                searchHandler.removeCallbacksAndMessages(null)
+                searchHandler.postDelayed({
+                    homeViewModel.searchAirport(newText, true)
+                }, searchDelay)
+                return true
+            }
+
+        })
+
+
+        // Handle text changes in the origin search view.
+        binding.searchAirportOrigin.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                homeViewModel.searchAirport(newText, false)
+                binding.originListView.visibility = View.VISIBLE
+
+                return true
+            }
+
+        })
+
     }
 
     override fun onDestroyView() {

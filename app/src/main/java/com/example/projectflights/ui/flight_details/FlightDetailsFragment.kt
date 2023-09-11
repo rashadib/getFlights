@@ -1,4 +1,4 @@
-package com.example.lec17.ui.movie_details
+package com.example.projectflights.ui.flight_details
 
 import android.annotation.SuppressLint
 import android.os.Build
@@ -11,11 +11,14 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.lec17.ui.movie_details.FlightDetailsViewModel
 import com.example.projectflights.data.service.dto.flights.Itinerary
 import com.example.projectflights.databinding.FragmentFlightDetailsBinding
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+
 
 
 class FlightDetailsFragment : Fragment() {
@@ -42,8 +45,9 @@ class FlightDetailsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {  val homeViewModel =
-        ViewModelProvider(this).get(FlightDetailsViewModel::class.java)
+    ): View? {
+        val homeViewModel =
+            ViewModelProvider(this).get(FlightDetailsViewModel::class.java)
 
         _binding = FragmentFlightDetailsBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -58,78 +62,63 @@ class FlightDetailsFragment : Fragment() {
     }
 
 
-
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
 
-        val flight = if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+        val flight = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             arguments?.getParcelable("flight", Itinerary::class.java) ?: return
-        }else{
+        } else {
             arguments?.getParcelable("flight") ?: return
         }
 
-        with(binding){
-            val departureTime = flight.legs?.get(0)?.departure
-            val arrivalTime = flight.legs?.get(0)?.arrival
+        with(binding) {
 
-
-
-            val formattedDepartureTime =
-                departureTime?.let {
-                    formatDate(it,"HH:mm")
-                }
-
-            val formattedDepartureDate =
-                departureTime?.let {
-                    formatDate(it,"dd-MM-yyyy")
-                }
-
-            val formattedArrivalTime =
-                arrivalTime?.let {
-                    formatDate(it,"HH:mm")
-                }
-
-            val formattedArrivalDate =
-                arrivalTime?.let {
-                    formatDate(it,"dd-MM-yyyy")
-                }
-
-            tvAirlineName.text = flight.legs?.get(0)?.carriers?.marketing?.get(0)?.name ?: "not found"
-            tvDepartureTime.text= formattedDepartureTime
+            tvAirlineName.text =
+                flight.legs?.get(0)?.carriers?.marketing?.get(0)?.name ?: "not found"
+            tvDepartureTime.text = flight.legs?.get(0)?.departure?.let { formatDate(it, "HH:mm") }
             tvFdOriginAirport.text = flight.legs?.get(0)?.origin?.displayCode
-            tvArrivalTime.text = formattedArrivalTime
+            tvArrivalTime.text = flight.legs?.get(0)?.arrival?.let { formatDate(it, "HH:mm") }
             tvArrivalAirport.text = flight.legs?.get(0)?.destination?.displayCode
             tvDepartureAirportName.text = flight.legs?.get(0)?.origin?.name
             tvArrivalAirportName.text = flight.legs?.get(0)?.destination?.name
-            tvDepartureDate.text = formattedDepartureDate
-            tvArrivalDate.text = formattedArrivalDate
+            tvDepartureDate.text =
+                flight.legs?.get(0)?.departure?.let { formatDate(it, "dd-MM-yyyy") }
+            tvArrivalDate.text = flight.legs?.get(0)?.arrival?.let { formatDate(it, "dd-MM-yyyy") }
             tvPrice.text = flight.price.formatted
 
-            Picasso.get().load(flight.legs?.get(0)?.carriers?.marketing?.get(0)?.logoUrl).into(ivAirlineFavicom)
+            val stops = flight.legs?.get(0)?.stopCount
+            with(tvStops) {
+                if ((stops != null) && (stops > 0)) {
+                    visibility = View.VISIBLE
+                    if (stops == 1) {
+                        text = "(1 stop)"
+                    } else {
+                        text = "($stops stops)"
+                    }
+                } else {
+                    View.GONE
+                }
+
+            }
+
+            Picasso.get().load(flight.legs?.get(0)?.carriers?.marketing?.get(0)?.logoUrl)
+                .into(ivAirlineFavicom)
 
             val flightDuration = flight.legs?.get(0)?.durationInMinutes
-            val flightDurationHours = flightDuration?.div(60)
-            val flightDurationMinutes = flightDuration?.rem(60)
+            tvFlightDuration.text = formatFlightDuration(flightDuration)
 
-            if (flightDuration != null) {
-                if(flightDuration >= 60){
-                    tvFlightDuration.text= "${flightDurationHours.toString()}:${flightDurationMinutes.toString()} hours"
-                }else{
-                    tvFlightDuration.text= "${flightDuration.toString()} minutes"
-                }
-
-            }
-            val timeDeltaDays =  flight.legs?.get(0)?.timeDeltaInDays
-            if (timeDeltaDays != null) {
-                if(timeDeltaDays >0 ){
-                    tvTimeDeltaDays.visibility = View.VISIBLE
-                    tvTimeDeltaDays.text = "+(${timeDeltaDays} day)"
-                }else{
-                    tvTimeDeltaDays.visibility = View.GONE
+            val timeDeltaDays = flight.legs?.get(0)?.timeDeltaInDays
+            with(tvTimeDeltaDays) {
+                if (timeDeltaDays != null && timeDeltaDays > 0) {
+                    visibility = View.VISIBLE
+                    text = "(+${timeDeltaDays} day)"
+                } else {
+                    View.GONE
                 }
             }
+
         }
 
     }
@@ -140,6 +129,19 @@ class FlightDetailsFragment : Fragment() {
         return parsedDate.format(DateTimeFormatter.ofPattern(pattern))
     }
 
+    private fun formatFlightDuration(minutes: Int?): String {
+        return if (minutes != null) {
+            val hours = minutes / 60
+            val remainingMinutes = minutes % 60
+            if (minutes >= 60) {
+                "${hours}h:${remainingMinutes}m"
+            } else {
+                "${minutes}m"
+            }
+        } else {
+            ""
+        }
+    }
 
 
 }

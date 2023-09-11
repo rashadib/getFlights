@@ -13,36 +13,56 @@
 
         <TextView
             android:id="@+id/tv_price_response"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
             android:hint="100usd"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textColor="#293474"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/tv_destination_flight_response"
             app:layout_constraintTop_toBottomOf="@id/tv_destination_flight_response" />
 
         <TextView
             android:id="@+id/tv_origin_flight_response"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
             android:hint="Paris"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_destination_flight_response"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:hint="London"
-            app:layout_constraintEnd_toEndOf="@+id/tv_origin_flight_response"
             app:layout_constraintStart_toStartOf="@+id/tv_origin_flight_response"
             app:layout_constraintTop_toBottomOf="@+id/tv_origin_flight_response" />
+
+        <TextView
+            android:id="@+id/tv__item_airline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:text="airline name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_item_favicon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:minHeight="100dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv__item_airline"
+            app:srcCompat="@drawable/baseline_airplanemode_active_24" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

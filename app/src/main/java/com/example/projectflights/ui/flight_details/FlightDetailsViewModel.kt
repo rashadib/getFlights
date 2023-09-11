@@ -6,8 +6,7 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
-@HiltViewModel
-class FlightDetailsViewModel @Inject constructor() : ViewModel() {
+class FlightDetailsViewModel: ViewModel() {
     private val _title = MutableLiveData<String?>()
     val title: LiveData<String?> = _title
 

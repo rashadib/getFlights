@@ -21,9 +21,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            app:searchIcon="@drawable/baseline_flight_takeoff_24"
             android:background="#EDE8E8"
-            android:iconifiedByDefault="false" />
+            android:iconifiedByDefault="false"
+            app:queryHint="Origin Airport/City/Country"
+            app:searchIcon="@drawable/baseline_flight_takeoff_24" />
 
         <ListView
             android:id="@+id/originListView"
@@ -47,12 +48,11 @@
             android:id="@+id/search_airport_destination"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:searchIcon="@drawable/baseline_flight_land_24"
             android:layout_margin="8dp"
-            app:iconifiedByDefault="false"
-            android:hint="@string/destination_search_hint"
             android:background="#EDE8E8"
-            />
+            app:iconifiedByDefault="false"
+            app:queryHint="Destination Airport/City/Country"
+            app:searchIcon="@drawable/baseline_flight_land_24" />
         <ListView
             android:id="@+id/destListView"
             android:layout_width="match_parent"
@@ -80,7 +80,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="Choose Departure Date"
+        android:text="@string/choose_departure_date"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -94,23 +94,30 @@
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:inputType="date"
         android:focusable="false"
-        android:editable="false"
         android:clickable="true"
         android:hint="@string/date_format"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        android:autofillHints="yyyy-mm-dd"
+        android:maxWidth="488dp"/>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_find_flights"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-        android:text="Find A Flight"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/rounded_btn"
+        android:text="@string/find_a_flight"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="@+id/et_choose_date"
         app:layout_constraintStart_toStartOf="@+id/et_choose_date"
-        app:layout_constraintTop_toBottomOf="@+id/et_choose_date" />
+        app:layout_constraintTop_toBottomOf="@+id/et_choose_date"
+        android:maxWidth="320dp"/>
 
     <TextView
         android:id="@+id/text_error"
@@ -136,6 +143,7 @@
         app:layout_constraintTop_toTopOf="@+id/originLl" />
 
     <ImageView
+        android:contentDescription="@string/flight_not_found"
         android:id="@+id/iv_no_Flights"
         android:layout_width="240dp"
         android:layout_height="203dp"
@@ -151,7 +159,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="visible"
-        android:text="Sorry.. No Flights Where Found!"
+        android:text="@string/sorry_no_flights_where_found"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textColor="#EA0606"
         app:layout_constraintEnd_toEndOf="@+id/iv_no_Flights"
