@@ -2,6 +2,7 @@ package com.example.projectflights.ui.home
 
 import android.app.DatePickerDialog
 import android.content.Context
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -14,22 +15,17 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.SearchView
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.Navigation.findNavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.projectflights.R
 import com.example.projectflights.adapter.FlightsAdapter
-import com.example.projectflights.data.service.dto.flights.Eco
 import com.example.projectflights.data.service.dto.flights.Itinerary
-import com.example.projectflights.data.service.dto.flights.Leg
 import com.example.projectflights.databinding.FragmentHomeBinding
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -54,7 +50,7 @@ class HomeFragment : Fragment() {
 
     // Create a handler to manage search delay.
     val searchHandler = Handler(Looper.getMainLooper())
-    val searchDelay: Long = 1000 // 1 second
+    val searchDelay: Long = 700 // 3 second
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -64,7 +60,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
+            ViewModelProvider(this)[HomeViewModel::class.java]
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -94,8 +90,8 @@ class HomeFragment : Fragment() {
         binding.originListView.setOnItemClickListener(object : OnItemClickListener {
             override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
 
-                homeViewModel.selectedOirignData = filteredOriginList[p2]
-                val selectedItem = homeViewModel.selectedOirignData
+                homeViewModel.selectedOriginData = filteredOriginList[p2]
+                val selectedItem = homeViewModel.selectedOriginData
                 originDisplayText =
                     "${selectedItem?.skyId}, ${selectedItem?.presentation?.title} (${selectedItem?.presentation?.subtitle})"
                 binding.searchAirportOrigin.setQuery(
@@ -115,7 +111,7 @@ class HomeFragment : Fragment() {
             override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
 
                 homeViewModel.selectedDestinationData = filteredDestinationList[p2]
-                var selectedItem = homeViewModel.selectedDestinationData
+                val selectedItem = homeViewModel.selectedDestinationData
                 destDisplayText =
                     "${selectedItem?.skyId}, ${selectedItem?.presentation?.title} (${selectedItem?.presentation?.subtitle})"
                 binding.searchAirportDestination.setQuery(
@@ -136,7 +132,7 @@ class HomeFragment : Fragment() {
         // Observe changes in origin airport data and update the suggestion list.
         homeViewModel.originAirport.observe(viewLifecycleOwner) {
             Log.d("TAG", "onCreateView: ")
-            var listData = arrayListOf<String>()
+            val listData = arrayListOf<String>()
             filteredOriginList.clear()
             it.map {
                 listData.add("${it.skyId}, ${it.presentation.title} (${it.presentation.subtitle})")
@@ -156,7 +152,7 @@ class HomeFragment : Fragment() {
         // Observe changes in destination airport data and update the suggestion list.
         homeViewModel.destinationAirport.observe(viewLifecycleOwner) {
             Log.d("TAG", "onCreateView: ")
-            var listData = arrayListOf<String>()
+            val listData = arrayListOf<String>()
             filteredDestinationList.clear()
             it.map {
                 listData.add("${it.skyId}, ${it.presentation.title} (${it.presentation.subtitle})")
@@ -209,7 +205,7 @@ class HomeFragment : Fragment() {
 
         // Observe changes in flight data and update the RecyclerView.
         homeViewModel.flights.observe(viewLifecycleOwner) {
-            with(binding.rvFlights) {
+            binding.rvFlights.apply {
                 layoutManager = LinearLayoutManager(context)
                 adapter = FlightsAdapter(it) { item ->
                     onListItemClick(item)
@@ -219,13 +215,22 @@ class HomeFragment : Fragment() {
 
         // Observe loading state and show/hide the loading indicator.
         homeViewModel.loading.observe(viewLifecycleOwner) {
-            binding.progressLoading.visibility = if (it) View.VISIBLE else View.GONE
+            binding.lottieLoading.visibility = if (it) View.VISIBLE else View.GONE
         }
 
         // Observe the absence of flights and show/hide the corresponding UI elements.
         homeViewModel.noFlights.observe(viewLifecycleOwner) {
-            binding.ivNoFlights.visibility = if (it) View.VISIBLE else View.GONE
-            binding.tvNoFlights.visibility = if (it) View.VISIBLE else View.GONE
+            if(it) {
+                binding.rvFlights.apply {
+                    layoutManager = LinearLayoutManager(context)
+                    adapter = FlightsAdapter(arrayListOf()) { item ->
+                        onListItemClick(item)
+                    }
+                }
+            }
+            binding.lottieLoading.visibility =  View.GONE
+            binding.lottieNotFound.visibility = if (it) View.VISIBLE else View.GONE
+            binding.lottieNotFound.visibility = if (it) View.VISIBLE else View.GONE
         }
 
         return root
@@ -298,9 +303,14 @@ class HomeFragment : Fragment() {
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.P)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.apply {
+            searchAirportOrigin.outlineSpotShadowColor = Color.WHITE
+            searchAirportOrigin.outlineAmbientShadowColor = Color.WHITE
+        }
         // Handle text changes in the destination search view with a delay.
         binding.searchAirportDestination.setOnQueryTextListener(object :
             SearchView.OnQueryTextListener {
@@ -327,9 +337,11 @@ class HomeFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                homeViewModel.searchAirport(newText, false)
-                binding.originListView.visibility = View.VISIBLE
-
+                // Remove any previous search tasks and schedule a new one with a delay.
+                searchHandler.removeCallbacksAndMessages(null)
+                searchHandler.postDelayed({
+                    homeViewModel.searchAirport(newText, false)
+                }, searchDelay)
                 return true
             }
 

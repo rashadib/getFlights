@@ -25,6 +25,7 @@ interface AirportService {
 
             val client = OkHttpClient
                     .Builder()
+                .retryOnConnectionFailure(true)
                 .addInterceptor(httpLoggingInterceptor)
                     .build()
             return Retrofit.Builder()

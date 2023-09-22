@@ -3,7 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:forceDarkAllowed="true"
+    android:background="@color/blue"
     android:layout_height="match_parent">
+
+
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="350dp"
+        android:background="@drawable/rounded_rv"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -39,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Flight details"
-        android:textColor="#101B54"
+        android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"
         android:typeface="normal"
@@ -52,7 +67,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.15" />
+        app:layout_constraintGuide_percent="0.11" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline6"
@@ -66,19 +81,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:text="EL AL Airline"
-        app:layout_constraintBottom_toTopOf="@+id/guideline7"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_airline_favicom"
         app:layout_constraintStart_toEndOf="@+id/iv_airline_favicom"
-        app:layout_constraintTop_toTopOf="@+id/guideline5" />
+        app:layout_constraintTop_toTopOf="@+id/iv_airline_favicom" />
 
     <ImageView
         android:id="@+id/iv_airline_favicom"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline7"
+        android:layout_marginTop="15dp"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toTopOf="@+id/guideline5"
         app:srcCompat="@drawable/baseline_airplanemode_active_24" />
@@ -96,6 +109,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="LCA"
+        android:textColor="@color/blue"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/tv_departure_time"
         app:layout_constraintStart_toStartOf="@+id/tv_departure_time"
@@ -108,6 +122,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="13:00"
+        android:textColor="@color/blue"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toTopOf="@+id/guideline7" />
 
@@ -138,6 +153,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:text="15:00"
+        android:textColor="@color/blue"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toTopOf="@+id/guideline7" />
 
@@ -147,6 +163,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="TLV"
+        android:textColor="@color/blue"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/tv_arrival_time"
         app:layout_constraintStart_toStartOf="@+id/tv_arrival_time"
@@ -158,6 +175,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="2 hours"
+        android:textColor="@color/blue"
         app:layout_constraintEnd_toEndOf="@+id/view"
         app:layout_constraintStart_toStartOf="@+id/view"
         app:layout_constraintTop_toBottomOf="@+id/view" />
@@ -179,6 +197,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="12/12/2024"
+        android:textColor="@color/blue"
         app:layout_constraintStart_toStartOf="@+id/tv_deparure_date_title"
         app:layout_constraintTop_toBottomOf="@+id/tv_deparure_date_title" />
 
@@ -189,6 +208,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:text="Departure:"
+        android:textColor="@color/blue"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toTopOf="@+id/guideline6" />
 
@@ -197,10 +217,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:text="Arrival:"
+        android:textColor="@color/blue"
         app:layout_constraintStart_toStartOf="@+id/tv_departure_date"
-        app:layout_constraintTop_toBottomOf="@+id/tv_stops" />
+        app:layout_constraintTop_toBottomOf="@+id/line2Iv" />
 
     <TextView
         android:id="@+id/tv_arrival_date"
@@ -208,6 +229,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="12/12/2024"
+        android:textColor="@color/blue"
         app:layout_constraintStart_toStartOf="@+id/textView5"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
@@ -227,7 +249,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="$130"
-        android:textColor="#114714"
+        android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/tv_price_title"
@@ -239,6 +261,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:text="Larnaca International Airport"
+        android:textColor="@color/blue"
         app:layout_constraintBottom_toBottomOf="@+id/tv_departure_date"
         app:layout_constraintStart_toEndOf="@+id/tv_deparure_date_title"
         app:layout_constraintTop_toTopOf="@+id/tv_departure_date" />
@@ -248,6 +271,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ben_gurion_airport"
+        android:textColor="@color/blue"
         app:layout_constraintBottom_toBottomOf="@+id/tv_arrival_date"
         app:layout_constraintStart_toStartOf="@+id/tv_departure_airport_name"
         app:layout_constraintTop_toTopOf="@+id/tv_arrival_date" />
@@ -256,10 +280,35 @@
         android:id="@+id/tv_stops"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:text="@string/_1_stop"
-        android:textColor="#F13325"
+        android:textColor="@color/blue"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/tv_departure_date"
         app:layout_constraintStart_toStartOf="@+id/tv_departure_date"
-        app:layout_constraintTop_toBottomOf="@+id/tv_departure_airport_name" />
+        app:layout_constraintTop_toBottomOf="@+id/line1Iv" />
+
+    <ImageView
+        android:id="@+id/line1Iv"
+        android:layout_width="40dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="@+id/tv_departure_date"
+        app:layout_constraintStart_toStartOf="@+id/tv_departure_date"
+        app:layout_constraintTop_toBottomOf="@+id/tv_departure_date"
+        app:srcCompat="@drawable/dottet_line"
+        app:tint="@color/black" />
+
+    <ImageView
+        android:id="@+id/line2Iv"
+        android:layout_width="40dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="@+id/tv_departure_date"
+        app:layout_constraintHorizontal_bias="0.514"
+        app:layout_constraintStart_toStartOf="@+id/tv_departure_date"
+        app:layout_constraintTop_toBottomOf="@+id/tv_stops"
+        app:srcCompat="@drawable/dottet_line"
+        app:tint="@color/black" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

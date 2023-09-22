@@ -1,8 +1,5 @@
 package com.example.projectflights.ui.home
-
-import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,13 +11,11 @@ import com.example.projectflights.data.service.dto.flights.Itinerary
 import kotlinx.coroutines.launch
 import java.io.IOException
 import java.time.LocalDate
-import java.util.Date
-
 import com.example.projectflights.data.service.dto.airports.Data as AirportData
 
 class HomeViewModel() : ViewModel() {
 
-    var selectedOirignData: AirportData? = null
+    var selectedOriginData: AirportData? = null
     var selectedDestinationData: AirportData? = null
 
     private val _originAirport = MutableLiveData<List<Data>>()
@@ -49,8 +44,6 @@ class HomeViewModel() : ViewModel() {
     val noFlights: LiveData<Boolean> = _noFlights
 
     // LiveData to hold the list of saved ItineraryEntity objects from the Room Database
-
-
 
 
     fun searchAirport(query: String?, airportDest: Boolean) {
@@ -112,22 +105,24 @@ class HomeViewModel() : ViewModel() {
                     )
 
             _flights.value = flightResponse.data.itineraries
-
+            _noFlights.value = _flights.value?.isEmpty()
             // Save fetched itineraries to the Room Database
          //    itineraryRepository.saveItineraries(flightResponse.data.itineraries)
 
 
         } catch (e: IOException) {
-            Log.d("RASHAD", "retrieveFlights: error1")
+            Log.e("RASHAD", "retrieveFlights: error1 ${e.message}")
+            _noFlights.value = _flights.value?.isEmpty()
             _error.value = e.message ?: "Please check your internet and try again"
         } catch (e: java.lang.Exception) {
-            Log.d("RASHAD", "retrieveFlights: error2")
-            _noFlights.value = true
+            Log.e("RASHAD", "retrieveFlights: error ${e.message}")
+            _noFlights.value = _flights.value?.isEmpty()
             _error.value = e.message ?: "Unknown Error"
         } finally {
-            Log.d("RASHAD", "retrieveFlights: error3")
+            _noFlights.value = _flights.value?.isEmpty()
             _loading.value = false
         }
+
 
 
     }
@@ -137,8 +132,8 @@ class HomeViewModel() : ViewModel() {
 
         try {
             retrieveFlights(
-                this@HomeViewModel.selectedOirignData?.skyId!!,
-                this@HomeViewModel.selectedOirignData?.entityId!!,
+                this@HomeViewModel.selectedOriginData?.skyId!!,
+                this@HomeViewModel.selectedOriginData?.entityId!!,
                 this@HomeViewModel.selectedDestinationData?.skyId!!,
                 this@HomeViewModel.selectedDestinationData?.entityId!!,
                 selectedDate.value!!.toString()

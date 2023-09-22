@@ -15,10 +15,8 @@ import com.example.lec17.ui.movie_details.FlightDetailsViewModel
 import com.example.projectflights.data.service.dto.flights.Itinerary
 import com.example.projectflights.databinding.FragmentFlightDetailsBinding
 import com.squareup.picasso.Picasso
-import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-
 
 
 class FlightDetailsFragment : Fragment() {
@@ -28,14 +26,7 @@ class FlightDetailsFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-
-    private lateinit var viewModel: FlightDetailsViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
+    @Deprecated("Deprecated in Java")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         Toast.makeText(requireContext(), "AAA", Toast.LENGTH_SHORT).show()
         return false
@@ -45,15 +36,11 @@ class FlightDetailsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val homeViewModel =
-            ViewModelProvider(this).get(FlightDetailsViewModel::class.java)
+    ): View {
+        ViewModelProvider(this)[FlightDetailsViewModel::class.java]
 
         _binding = FragmentFlightDetailsBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-
-        return root
+        return binding.root
     }
 
     override fun onDestroy() {
@@ -89,19 +76,16 @@ class FlightDetailsFragment : Fragment() {
             tvPrice.text = flight.price.formatted
 
             val stops = flight.legs?.get(0)?.stopCount
-            with(tvStops) {
-                if ((stops != null) && (stops > 0)) {
-                    visibility = View.VISIBLE
-                    if (stops == 1) {
-                        text = "(1 stop)"
-                    } else {
-                        text = "($stops stops)"
-                    }
-                } else {
-                    View.GONE
-                }
 
+            if ((stops != null) && (stops > 0)) {
+                binding.tvStops.visibility = View.VISIBLE
+                binding.tvStops.text = "($stops stops)"
+            } else {
+                binding.tvStops.visibility = View.GONE
+                binding.line2Iv.visibility = View.GONE
             }
+
+
 
             Picasso.get().load(flight.legs?.get(0)?.carriers?.marketing?.get(0)?.logoUrl)
                 .into(ivAirlineFavicom)

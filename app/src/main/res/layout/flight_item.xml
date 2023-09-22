@@ -4,10 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:forceDarkAllowed="true"
+    android:background="@android:color/white"
     android:layout_margin="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cv_flight_item"
+        android:background="@drawable/rounded_list_item"
+        android:backgroundTint="#161e36"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -17,7 +21,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:hint="100usd"
-            android:textColor="#293474"
+            android:textSize="19sp"
+            android:textColor="@color/white"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/tv_destination_flight_response"
             app:layout_constraintTop_toBottomOf="@id/tv_destination_flight_response" />

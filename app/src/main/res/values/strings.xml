@@ -1,16 +1,17 @@
 <resources >
-    <string name="app_name">ProjectFlights</string>
-    <string name="title_search_flights">Search Flights</string>
+    <string name="app_name">Best Flight</string>
+    <string name="title_search_flights">Best Flight</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="origin_search_hint">Origin City/ Airport</string>
     <string name="destination_search_hint">Destination City/ Airport</string>
-    <string name="date_format">yyyy-mm-dd</string>
-    <string name="find_a_flight">Find A Flight</string>
+    <string name="date_format">Require date</string>
+    <string name="find_a_flight">Search</string>
     <string name="choose_departure_date">Choose Departure Date</string>
     <string name="flight_not_found">flight not found</string>
     <string name="sorry_no_flights_where_found">Sorry.. No Flights Where Found!</string>
     <string name="title_flight_details">Flight Details</string>
     <string name="_1_stop">1 stop</string>
     <string name="ben_gurion_airport">Ben-Gurion Airport</string>
+    <string name="get_a_flight">Get A Flight</string>
 </resources>
