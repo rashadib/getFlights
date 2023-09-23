@@ -21,6 +21,10 @@ Find Flights is a modern Android application designed to streamline the flight s
 ## Screenshots and Demo
 <div style="display: flex; justify-content: space-between;">
 <img src="/demo/demo.gif" width="200" height="400"/>
+<img src="/demo/noflights.gif" width="200" height="400"/>
+</div>
+<div style="display: flex; justify-content: space-between;">
+
 <img src="/demo/1.png" width="200" height="400"/>
 <img src="/demo/2.png" width="200" height="400"/>
 <img src="/demo/3.png" width="200" height="400"/>
@@ -30,7 +34,7 @@ Find Flights is a modern Android application designed to streamline the flight s
 <img src="/demo/5.png" width="200" height="400"/>
 <img src="/demo/6.png" width="200" height="400"/>
 <img src="/demo/7.png" width="200" height="400"/>
-<img src="/demo/noflights.gif" width="200" height="400"/>
+
 </div>
 ## Features
 
