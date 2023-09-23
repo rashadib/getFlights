@@ -42,6 +42,7 @@ class HomeFragment : Fragment() {
     private var destDisplayText: String = ""
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private var shouldNavigate = false
 
     // Lists to store filtered airport data for origin and destination.
     private var filteredOriginList = arrayListOf<AirportData>()
@@ -123,6 +124,7 @@ class HomeFragment : Fragment() {
                 filteredDestinationList.clear()
                 resetResultListView(SearchType.DEST)
                 binding.destListView.visibility = View.GONE
+                hideKeyBoard(p1!!)
 
             }
 
@@ -191,49 +193,50 @@ class HomeFragment : Fragment() {
 
         // Handle the "Find Flights" button click.
         binding.btnFindFlights.setOnClickListener {
-
             // Hide the keyboard when the button is clicked.
-            val imm =
-                requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-            imm?.hideSoftInputFromWindow(it.windowToken, 0)
+            hideKeyBoard(it)
 
             // Start a coroutine to perform flight searches.
+            shouldNavigate = true
             viewLifecycleOwner.lifecycleScope.launch {
                 homeViewModel.findFlights()
             }
         }
 
         // Observe changes in flight data and update the RecyclerView.
-        homeViewModel.flights.observe(viewLifecycleOwner) {
-            binding.rvFlights.apply {
-                layoutManager = LinearLayoutManager(context)
-                adapter = FlightsAdapter(it) { item ->
-                    onListItemClick(item)
-                }
+        homeViewModel.flights.observe(viewLifecycleOwner) { it ->
+            if (shouldNavigate) {
+                val bundle = Bundle()
+                bundle.putSerializable("flights", ArrayList(it))
+                bundle.putString("origin", homeViewModel?.selectedOriginData?.skyId)
+                bundle.putString("destination", homeViewModel?.selectedDestinationData?.skyId)
+                findNavController().navigate(
+                    R.id.action_navigation_home_to_flightListFragment,
+                    bundle
+                )
+                shouldNavigate = false
             }
         }
 
         // Observe loading state and show/hide the loading indicator.
-        homeViewModel.loading.observe(viewLifecycleOwner) {
+        homeViewModel.loading.observe(viewLifecycleOwner)
+        {
             binding.lottieLoading.visibility = if (it) View.VISIBLE else View.GONE
         }
 
         // Observe the absence of flights and show/hide the corresponding UI elements.
-        homeViewModel.noFlights.observe(viewLifecycleOwner) {
-            if(it) {
-                binding.rvFlights.apply {
-                    layoutManager = LinearLayoutManager(context)
-                    adapter = FlightsAdapter(arrayListOf()) { item ->
-                        onListItemClick(item)
-                    }
-                }
-            }
-            binding.lottieLoading.visibility =  View.GONE
-            binding.lottieNotFound.visibility = if (it) View.VISIBLE else View.GONE
-            binding.lottieNotFound.visibility = if (it) View.VISIBLE else View.GONE
+        homeViewModel.noFlights.observe(viewLifecycleOwner)
+        {
+            binding.lottieLoading.visibility = View.GONE
         }
 
         return root
+    }
+
+    private fun hideKeyBoard(it: View) {
+        val imm =
+            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+        imm?.hideSoftInputFromWindow(it.windowToken, 0)
     }
 
 
@@ -242,7 +245,6 @@ class HomeFragment : Fragment() {
         //TODO Move destDisplayText and originDisplayText to viewModel
         binding.searchAirportDestination.setQuery(destDisplayText, false)
         binding.searchAirportOrigin.setQuery(originDisplayText, false)
-
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -290,16 +292,6 @@ class HomeFragment : Fragment() {
     enum class SearchType {
         ORIGIN,
         DEST
-    }
-
-    // Function that handles item click in the flight list to navigate to flight details.
-    private fun onListItemClick(flight: Itinerary) {
-
-        // Navigate to the FlightDetailsFragment and pass the "flight" as bundle.
-        val bundle = Bundle()
-        bundle.putParcelable("flight", flight)
-        findNavController().navigate(R.id.action_navigation_home_to_flightDetailsFragment, bundle)
-
     }
 
 

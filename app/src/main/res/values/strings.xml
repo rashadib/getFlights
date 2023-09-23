@@ -1,4 +1,4 @@
-<resources >
+<resources>
     <string name="app_name">Best Flight</string>
     <string name="title_search_flights">Best Flight</string>
     <string name="title_dashboard">Dashboard</string>
@@ -6,7 +6,7 @@
     <string name="origin_search_hint">Origin City/ Airport</string>
     <string name="destination_search_hint">Destination City/ Airport</string>
     <string name="date_format">Require date</string>
-    <string name="find_a_flight">Search</string>
+    <string name="find_a_flight">Find A Flight</string>
     <string name="choose_departure_date">Choose Departure Date</string>
     <string name="flight_not_found">flight not found</string>
     <string name="sorry_no_flights_where_found">Sorry.. No Flights Where Found!</string>
@@ -14,4 +14,11 @@
     <string name="_1_stop">1 stop</string>
     <string name="ben_gurion_airport">Ben-Gurion Airport</string>
     <string name="get_a_flight">Get A Flight</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home">Home</string>
+    <string name="flight_details">Flight Details</string>
+    <string name="search_result">Search Result</string>
+    <string name="start_searching_flights">Start Searching Flights</string>
+    <string name="best_flights_app">Best Flights App</string>
 </resources>

@@ -106,16 +106,10 @@ class HomeViewModel() : ViewModel() {
 
             _flights.value = flightResponse.data.itineraries
             _noFlights.value = _flights.value?.isEmpty()
-            // Save fetched itineraries to the Room Database
-         //    itineraryRepository.saveItineraries(flightResponse.data.itineraries)
-
-
         } catch (e: IOException) {
-            Log.e("RASHAD", "retrieveFlights: error1 ${e.message}")
             _noFlights.value = _flights.value?.isEmpty()
             _error.value = e.message ?: "Please check your internet and try again"
         } catch (e: java.lang.Exception) {
-            Log.e("RASHAD", "retrieveFlights: error ${e.message}")
             _noFlights.value = _flights.value?.isEmpty()
             _error.value = e.message ?: "Unknown Error"
         } finally {

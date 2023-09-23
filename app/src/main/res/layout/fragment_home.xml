@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/white"
+    android:background="#fffff4"
     android:layout_height="match_parent"
     android:forceDarkAllowed="true"
     tools:context=".ui.home.HomeFragment">
@@ -11,7 +11,7 @@
     <View
         android:id="@+id/imageView3"
         android:layout_width="match_parent"
-        android:layout_height="320dp"
+        android:layout_height="500dp"
         android:background="#161e36"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,6 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
+        android:layout_marginTop="200dp"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -85,12 +86,12 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:padding="10dp"
+        android:visibility="gone"
         android:background="@drawable/rounded_rv"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_find_flights" />
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
         android:id="@+id/textView"
@@ -105,7 +106,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/destLl"
         app:layout_constraintTop_toBottomOf="@+id/destLl" />
-
     <EditText
         android:id="@+id/et_choose_date"
         android:layout_width="0dp"
@@ -124,71 +124,74 @@
         app:layout_constraintStart_toStartOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_find_flights"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:textAllCaps="false"
-        android:layout_marginTop="8dp"
-        android:textSize="17dp"
-        android:background="@color/white"
-        android:maxWidth="320dp"
-        android:text="@string/find_a_flight"
-        android:textColor="@color/black"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@drawable/rounded_rv"
+        android:layout_margin="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_choose_date" />
+        app:layout_constraintTop_toBottomOf="@+id/et_choose_date">
 
-    <TextView
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_find_flights"
+            android:layout_width="180dp"
+            android:layout_height="50dp"
+            android:background="@drawable/rounded_bt"
+            android:fontFamily="@font/semi_bold"
+            android:maxWidth="320dp"
+            android:text="@string/find_a_flight"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="17dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="400dp"
+        android:layout_height="200dp"
+        android:alpha="0.2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:src="@drawable/aireplan"/>
+
+ <TextView
         android:id="@+id/text_error"
+        android:layout_width="0dp"
+        android:layout_height="17dp"
         android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:visibility="visible"
+        tools:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+/>
 
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottieLoading"
-        android:layout_width="200dp"
-        android:layout_height="250dp"
-        android:layout_marginTop="60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
         android:clickable="true"
         android:visibility="gone"
-        tools:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/originLl"
         app:lottie_autoPlay="true"
         app:lottie_fileName="lottie_load.json"
-        app:lottie_loop="true" />
-
-
-
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/lottieNotFound"
-        android:layout_width="match_parent"
-        android:layout_height="370dp"
-        android:layout_marginTop="60dp"
-        android:clickable="true"
-        tools:visibility="visible"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="@id/rv_flights"
-        app:layout_constraintStart_toStartOf="@id/rv_flights"
-        app:layout_constraintTop_toTopOf="@+id/rv_flights"
-        app:lottie_autoPlay="true"
-        app:lottie_fileName="not_found.json"
-        app:lottie_loop="true" />
+        app:lottie_loop="true"
+        tools:visibility="visible" />
 
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="215dp"
         android:layout_marginEnd="10dp"
         android:backgroundTint="@color/white"
         android:src="@drawable/baseline_flight_takeoff_24"
@@ -231,6 +234,32 @@
         app:layout_constraintEnd_toEndOf="@+id/imageView4"
         app:layout_constraintStart_toStartOf="@+id/imageView4"
         app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/semi_bold"
+        android:text="Find Your Flight"
+        android:textColor="@color/white"
+        android:textSize="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView3" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/semi_bold"
+        android:gravity="center"
+        android:text="Find your cheapest flight now, select your origin, destination\n and the required date, We'll take \ncare about the rest"
+        android:textSize="12dp"
+        app:layout_constraintEnd_toEndOf="@+id/textView3"
+        app:layout_constraintStart_toStartOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.flight_list.FlightListFragment">
+
+    <View
+        android:id="@+id/imageView3"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="#161e36"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/appCompatImageView"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:rotation="100"
+            android:rotationX="180"
+            android:scaleType="center"
+            android:src="@drawable/arrow"
+            android:tint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.50" />
+
+        <TextView
+            android:id="@+id/originTv"
+            android:layout_width="100dp"
+            android:layout_height="57dp"
+            android:layout_marginTop="80dp"
+            android:layout_marginEnd="64dp"
+            android:fontFamily="@font/semi_bold"
+            android:gravity="center"
+            android:text="LCA"
+            android:textColor="@color/white"
+            android:textSize="34dp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline8"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/distinationTv"
+            android:layout_width="100dp"
+            android:layout_height="57dp"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="80dp"
+            android:fontFamily="@font/semi_bold"
+            android:gravity="center"
+            android:text="TLV"
+            android:textColor="@color/white"
+            android:textSize="34dp"
+            app:layout_constraintStart_toStartOf="@+id/guideline8"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/rounded_rv"
+        android:layout_marginTop="170dp">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_flights"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:backgroundTint="#f3f3f3"
+            android:padding="10dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottieNotFound"
+            android:layout_width="match_parent"
+            android:layout_height="370dp"
+            android:clickable="true"
+            android:layout_gravity="center"
+            tools:visibility="visible"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@id/rv_flights"
+            app:layout_constraintStart_toStartOf="@id/rv_flights"
+            app:layout_constraintTop_toTopOf="@+id/rv_flights"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="not_found.json"
+            app:lottie_loop="true" />
+    </FrameLayout>
+
+
+</FrameLayout>
