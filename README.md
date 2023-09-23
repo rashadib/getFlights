@@ -19,12 +19,13 @@ Best Flights is Your go-to Android app for effortless flight search. Discover, c
 Find Flights is a modern Android application designed to streamline the flight search and booking process. It offers users a user-friendly interface to search for flights, explore different destinations, and view detailed flight itineraries. The app provides a convenient and efficient way to find your next flight.
 
 ## Screenshots and Demo
-
+<div style="display: flex; justify-content: space-between;">
 <img src="/demo/demo.gif" width="200" height="400"/>
 <img src="/demo/1.png" width="200" height="400"/>
 <img src="/demo/2.png" width="200" height="400"/>
 <img src="/demo/3.png" width="200" height="400"/>
 <img src="/demo/4.png" width="200" height="400"/>
+</div>
 <img src="/demo/5.png" width="200" height="400"/>
 <img src="/demo/6.png" width="200" height="400"/>
 <img src="/demo/7.png" width="200" height="400"/>
