@@ -22,8 +22,6 @@ import java.time.format.DateTimeFormatter
 class FlightDetailsFragment : Fragment() {
     private var _binding: FragmentFlightDetailsBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     @Deprecated("Deprecated in Java")

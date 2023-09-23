@@ -1,4 +1,5 @@
 package com.example.projectflights.ui.home
+
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -19,20 +20,16 @@ class HomeViewModel() : ViewModel() {
     var selectedDestinationData: AirportData? = null
 
     private val _originAirport = MutableLiveData<List<Data>>()
-    val originAirport:LiveData<List<Data>> = _originAirport
+    val originAirport: LiveData<List<Data>> = _originAirport
 
     private val _destinationAirport = MutableLiveData<List<Data>>()
-    val destinationAirport:LiveData<List<Data>> = _destinationAirport
+    val destinationAirport: LiveData<List<Data>> = _destinationAirport
 
     private val _flights = MutableLiveData<List<Itinerary>>()
     val flights: LiveData<List<Itinerary>> = _flights
 
 
     private val _error = MutableLiveData<String?>()
-    val error: LiveData<String?> = _error
-
-    private val _date = MutableLiveData<String>()
-    val date: LiveData<String> = _date
 
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean> = _loading
@@ -42,9 +39,6 @@ class HomeViewModel() : ViewModel() {
 
     private val _noFlights = MutableLiveData(false)
     val noFlights: LiveData<Boolean> = _noFlights
-
-    // LiveData to hold the list of saved ItineraryEntity objects from the Room Database
-
 
     fun searchAirport(query: String?, airportDest: Boolean) {
 
@@ -65,12 +59,6 @@ class HomeViewModel() : ViewModel() {
                     else
                         _destinationAirport.value = airportResponse.data
 
-
-
-                    Log.d(
-                        "RASHAD",
-                        "retreveAirports-> skyid + entityId : ${_originAirport.value!![0].skyId + " " + _originAirport.value!![0].entityId + _destinationAirport.value!![0].skyId + " " + _destinationAirport.value!![0].entityId}"
-                    )
                 } catch (e: IOException) {
                     _error.value = e.message ?: "Please check your internet and try again"
                 } catch (e: java.lang.Exception) {
@@ -118,12 +106,9 @@ class HomeViewModel() : ViewModel() {
         }
 
 
-
     }
 
     suspend fun findFlights() {
-        //TODO check all variables not null
-
         try {
             retrieveFlights(
                 this@HomeViewModel.selectedOriginData?.skyId!!,

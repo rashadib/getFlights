@@ -133,7 +133,6 @@ class HomeFragment : Fragment() {
 
         // Observe changes in origin airport data and update the suggestion list.
         homeViewModel.originAirport.observe(viewLifecycleOwner) {
-            Log.d("TAG", "onCreateView: ")
             val listData = arrayListOf<String>()
             filteredOriginList.clear()
             it.map {
@@ -153,7 +152,6 @@ class HomeFragment : Fragment() {
 
         // Observe changes in destination airport data and update the suggestion list.
         homeViewModel.destinationAirport.observe(viewLifecycleOwner) {
-            Log.d("TAG", "onCreateView: ")
             val listData = arrayListOf<String>()
             filteredDestinationList.clear()
             it.map {

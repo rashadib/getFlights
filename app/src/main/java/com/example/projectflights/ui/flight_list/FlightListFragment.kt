@@ -16,11 +16,6 @@ import com.example.projectflights.data.service.dto.flights.Itinerary
 import com.example.projectflights.databinding.FragmentFlightDetailsBinding
 import com.example.projectflights.databinding.FragmentFlightListBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 class FlightListFragment : Fragment() {
 
     private var _binding: FragmentFlightListBinding? = null
@@ -49,13 +44,13 @@ class FlightListFragment : Fragment() {
         var destination = arguments?.getString("destination")
 
         binding.apply {
-            list?.apply {
+            list.apply {
                 if(isEmpty()){
-                    rvFlights?.visibility = View.GONE
-                    lottieNotFound?.visibility = View.VISIBLE
+                    rvFlights.visibility = View.GONE
+                    lottieNotFound.visibility = View.VISIBLE
                 } else {
-                    rvFlights?.visibility = View.VISIBLE
-                    lottieNotFound?.visibility = View.GONE
+                    rvFlights.visibility = View.VISIBLE
+                    lottieNotFound.visibility = View.GONE
                 }
             }
             rvFlights.apply {
