@@ -2,8 +2,6 @@
 
 Best Flights is Your go-to Android app for effortless flight search. Discover, compare and see details about your flights with ease.
 
-![Screenshot 1](screenshot1.png)
-![Screenshot 2](screenshot2.png)
 
 ## Table of Contents
 
@@ -18,31 +16,46 @@ Best Flights is Your go-to Android app for effortless flight search. Discover, c
 
 ## About
 
-[Provide a brief introduction to your project. Explain what it does and why it's useful.]
+Find Flights is a modern Android application designed to streamline the flight search and booking process. It offers users a user-friendly interface to search for flights, explore different destinations, and view detailed flight itineraries. The app provides a convenient and efficient way to find your next flight.
+
+## Screenshots and Demo
+
+<img src="/demo/1.png" width="300" height="600"/>
 
 ## Features
 
-[Explain the key features of your project.]
+Project Flights boasts several key features to enhance the user experience:
 
-- Feature 1
-- Feature 2
-- ...
+- **Flight Search:** The app allows users to search for flights by specifying the origin and destination airports, along with the desired travel date. The intuitive search interface simplifies the process of finding suitable flight options.
+
+- **Airport Suggestions:** Users receive intelligent airport suggestions as they type in the origin and destination fields, making it easier to select the correct airports and reducing the chances of errors in flight selection.
+
+- **Date Selection:** Project Flights includes a built-in date picker that enables users to select their travel date. The date picker is user-friendly and helps users choose their travel date accurately.
+
+- **Real-time Flight Data:** The app provides real-time flight data, including flight itineraries, prices, and airline information. Users can view detailed information about available flights, allowing them to make informed decisions.
+
+- **Error Handling:** Project Flights incorporates error handling to provide helpful feedback to users when issues arise, such as network problems or incomplete search queries. This ensures a smooth and frustration-free user experience.
+
+- **User-Friendly Interface:** The app features a user-friendly and intuitive interface that caters to both novice and experienced travelers. It prioritizes simplicity and ease of use.
+
+These features combine to create an Android application that simplifies the flight search process, helping users find the best flight options for their travel needs.
 
 ## Getting Started
 
-[Provide instructions on how to get started with your project.]
+To get started with Project Flights, follow these steps:
 
 ### Prerequisites
 
-[List any prerequisites or dependencies that users need to install before using your project.]
+Before running the application, ensure you have the following prerequisites installed:
+
+- **Android Studio:** Project Flights is an Android application, so you'll need Android Studio to build and run it. You can download Android Studio from [here](https://developer.android.com/studio).
 
 ### Installation
 
-[Explain how to install your project.]
+1. Clone the GitHub repository to your local machine using the following command:
 
-1. Step 1
-2. Step 2
-3. ...
+   ```sh
+   git clone https://github.com/rashadib/getFlights/tree/main
 
 ## Usage
 
@@ -67,9 +80,6 @@ Best Flights is Your go-to Android app for effortless flight search. Discover, c
 - `data/` - Data services and API-related code.
 - `utils/` - Utility classes and functions.
 
-## Screenshots
-
-[Include screenshots of your application here.]
 
 ## Roadmap
 
