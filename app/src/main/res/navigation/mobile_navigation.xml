@@ -21,12 +21,6 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:visibility="gone"
-        android:name="com.example.projectflights.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
-    <fragment
         android:id="@+id/navigation_flightDetailsFragment"
         android:name="com.example.projectflights.ui.flight_details.FlightDetailsFragment"
         android:label="@string/flight_details" />

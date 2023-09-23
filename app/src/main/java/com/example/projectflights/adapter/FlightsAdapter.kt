@@ -9,6 +9,7 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import java.lang.Exception
 
+//Adapter for displaying a list of flight itineraries in a RecyclerView.
 class FlightsAdapter(var flights: List<Itinerary>, private val onItemClick: (Itinerary) -> Unit) : RecyclerView.Adapter<FlightsAdapter.VH>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
@@ -22,11 +23,11 @@ class FlightsAdapter(var flights: List<Itinerary>, private val onItemClick: (Iti
 
 
         with(holder.binding){
-            tvOriginFlightResponse.text = flight.legs?.get(0)?.origin?.name
-            tvDestinationFlightResponse.text = flight.legs?.get(0)?.destination?.name
+            tvOriginFlightResponse.text = flight.legs?.first()?.origin?.name
+            tvDestinationFlightResponse.text = flight.legs?.first()?.destination?.name
             tvPriceResponse.text= flight.price.formatted
-            tvItemAirline.text = flight.legs?.get(0)?.carriers?.marketing?.get(0)?.name
-            flight.legs?.get(0)?.carriers?.marketing?.get(0)?.logoUrl?.let { logoUrl ->
+            tvItemAirline.text = flight.legs?.first()?.carriers?.marketing?.first()?.name
+            flight.legs?.first()?.carriers?.marketing?.first()?.logoUrl?.let { logoUrl ->
                 println(logoUrl)
                 Picasso.get().load(logoUrl).into(ivItemFavicon, object : Callback{
                     override fun onSuccess() {

@@ -6,15 +6,6 @@
         android:icon="@drawable/ic_flightsearch"
         android:title="@string/title_search_flights" />
 
-   <!-- <item
-        android:id="@+id/navigation_dashboard"
-        android:icon="@drawable/ic_dashboard_black_24dp"
-        android:title="@string/title_dashboard" />
--->
 
-    <item
-        android:id="@+id/navigation_notifications"
-        android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="@string/title_notifications" />
 
 </menu>

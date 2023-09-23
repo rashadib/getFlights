@@ -14,6 +14,7 @@ import java.io.IOException
 import java.time.LocalDate
 import com.example.projectflights.data.service.dto.airports.Data as AirportData
 
+//ViewModel for the HomeFragment, responsible for managing data and interactions related to flight search.
 class HomeViewModel() : ViewModel() {
 
     var selectedOriginData: AirportData? = null
@@ -40,6 +41,7 @@ class HomeViewModel() : ViewModel() {
     private val _noFlights = MutableLiveData(false)
     val noFlights: LiveData<Boolean> = _noFlights
 
+    //Function to search for airports based on user input.
     fun searchAirport(query: String?, airportDest: Boolean) {
 
         query?.let {
@@ -72,6 +74,7 @@ class HomeViewModel() : ViewModel() {
         }
     }
 
+    //Function to retrieve flight itineraries based on selected airports and date.
     private suspend fun retrieveFlights(
         originSkyId: String,
         originEntityId: String,
@@ -108,6 +111,7 @@ class HomeViewModel() : ViewModel() {
 
     }
 
+    //Function to initiate a flight search.
     suspend fun findFlights() {
         try {
             retrieveFlights(
@@ -124,6 +128,7 @@ class HomeViewModel() : ViewModel() {
 
     }
 
+    //Function to update the selected date.
     fun updateSelectedDate(newDate: LocalDate) {
         _selectedDate.value = newDate
     }
