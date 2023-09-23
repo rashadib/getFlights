@@ -36,6 +36,7 @@ Find Flights is a modern Android application designed to streamline the flight s
 <img src="/demo/7.png" width="200" height="400"/>
 
 </div>
+
 ## Features
 
 Project Flights boasts several key features to enhance the user experience:
@@ -73,39 +74,51 @@ Before running the application, ensure you have the following prerequisites inst
 
 ## Usage
 
-[Provide examples and instructions on how to use your project.]
+Once the app is running, you can use Project Flights to search for and book flights with ease. Follow these steps to get started:
 
-## Contributing
+1. Launch the app on your Android device or emulator.
 
-[Explain how others can contribute to your project if it's open source. Include guidelines for submitting pull requests, reporting issues, and more.]
+2. Enter the origin and destination airports in the respective search fields. The app will provide suggestions as you type, making it easy to select the correct airports.
 
-## License
+3. Select a travel date using the date picker. You can choose your preferred departure date from the calendar.
 
-[Specify the license for your project. For example, you can use a template like MIT License or choose any other license that suits your project.]
+4. Click the "Find Flights" button to initiate the flight search. Project Flights will retrieve a list of available flights based on your criteria.
+
+5. Browse the list of available flights, each displaying essential information such as origin, destination, price, and airline. You can scroll through the list to explore all the options.
+
+6. To view more details about a specific flight, tap on that flight's card. You'll see additional information, including layovers, departure times, and airline details.
+
+7. If you find a flight that suits your preferences, you can proceed to book it through the app or the airline's website.
+
+8. Enjoy your travel experience with Project Flights, your reliable flight search companion!
+
+Project Flights simplifies the flight booking process, allowing you to find the best flight options quickly and efficiently. Whether you're planning a vacation or a business trip, this app has you covered.
+
+Happy flying!
 
 ## Code Structure
 
-[Provide an overview of the code structure and organization of your project.]
 
 - `app/` - Contains the main Android application code.
   - `adapter/` - Adapters for RecyclerViews.
   - `data/` - Data-related components.
   - `ui/` - User interface components.
 - `data/` - Data services and API-related code.
-- `utils/` - Utility classes and functions.
 
+## Architecture
 
-## Roadmap
+* Fully written in Kotlin language.
+* Built on MVVM architecture pattern.
 
-[Discuss your project's future development plans.]
+## Libraries Used
 
-## Contact
-
-[Provide contact information for project maintainers or contributors.]
-
-## Acknowledgments
-
-[List any libraries, frameworks, or individuals you'd like to acknowledge.]
-
-[Optional: Add more sections or details as needed for your specific project.]
-
+- [Retrofit](https://square.github.io/retrofit/): For making network requests and handling API calls.
+- [OkHttp](https://square.github.io/okhttp/): An HTTP client for efficient network communication.
+- [Gson](https://github.com/google/gson): A library for JSON serialization and deserialization.
+- [Picasso](https://square.github.io/picasso/): A powerful image loading library for Android.
+- [ViewModel and LiveData](https://developer.android.com/topic/libraries/architecture/viewmodel): Android Architecture Components for UI data management.
+- [RecyclerView](https://developer.android.com/guide/topics/ui/layout/recyclerview): A UI component for displaying large data sets.
+- [ViewModelProvider](https://developer.android.com/reference/androidx/lifecycle/ViewModelProvider): For creating and managing ViewModel instances.
+- [DatePickerDialog](https://developer.android.com/reference/android/app/DatePickerDialog): A dialog for selecting dates.
+- [ViewModelScope](https://developer.android.com/kotlin/coroutines): Kotlin Coroutine library for launching coroutines within ViewModels.
+- [HttpLoggingInterceptor](https://square.github.io/okhttp/4.x/okhttp/okhttp3/-http-logging-interceptor/): An OkHttp interceptor for logging HTTP requests and responses.
